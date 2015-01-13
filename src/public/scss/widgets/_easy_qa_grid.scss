@@ -1,0 +1,81 @@
+#easy-qa-grid {
+	margin: 2em 10%;
+	clear: both;
+}
+
+#easy-qa-grid .item {
+	margin-bottom: 30px;
+}
+
+#easy-qa-grid .see-answer-sm,
+#easy-qa-grid .see-answer-lg {
+	display: none;
+	color: #fff;
+	background: #000;
+	padding: 10px 20px;
+}
+
+#easy-qa-grid .see-answer-sm {
+
+}
+
+#easy-qa-grid .see-answer-lg {
+
+}
+
+
+#easy-qa-grid .post-body {
+	min-height: 125px;
+	position: relative;
+	padding: 10px;
+	background: black;
+}
+
+#easy-qa-grid .post-body p {
+
+}
+
+#easy-qa-grid .author-body {
+	background: #333;
+	color: #b7b7b7;
+	height: 65px;
+}
+
+#easy-qa-grid .author-info {
+	padding: 10px 0;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+#easy-qa-grid a,
+#easy-qa-grid a:hover {
+	color: #fff;
+}
+
+#easy-qa-grid .isotope-item {
+	z-index: 2;
+}
+
+#easy-qa-grid .isotope-hidden.isotope-item {
+	pointer-events: none;
+	z-index: 1;
+}
+
+#easy-qa-grid .isotope,
+#easy-qa-grid .isotope .isotope-item {
+	-webkit-transition-duration: 0.8s;
+	-moz-transition-duration: 0.8s;
+	transition-duration: 0.8s;
+}
+
+#easy-qa-grid .isotope {
+	-webkit-transition-property: height, width;
+	-moz-transition-property: height, width;
+	transition-property: height, width;
+}
+
+#easy-qa-grid .isotope .isotope-item {
+	-webkit-transition-property: -webkit-transform, opacity;
+	-moz-transition-property: -moz-transform, opacity;
+	transition-property: transform, opacity;
+}
