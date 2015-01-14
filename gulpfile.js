@@ -1,7 +1,6 @@
 var gulp = require('gulp');
-var sass = require('gulp-sass');
 var del = require('del');
-var watch = require('gulp-watch');
+var $ = require('gulp-load-plugins')();
 
 var paths = {
 	build: './build',
@@ -36,20 +35,23 @@ gulp.task('reset', ['erase'], function() {
 // copies all php files to the build dir
 gulp.task('php', ['reset'], function() {
 	return gulp.src([paths.source + sources.php])
-		.pipe(gulp.dest(paths.build + destinations.php));
+		.pipe(gulp.dest(paths.build + destinations.php))
+		.pipe($.livereload());
 });
 
 // builds sass to the build directory
 gulp.task('sass', ['reset'], function() {
 	return gulp.src([paths.source + sources.sass])
-		.pipe(sass())
-		.pipe(gulp.dest(paths.build + destinations.css));
+		.pipe($.sass())
+		.pipe(gulp.dest(paths.build + destinations.css))
+		.pipe($.livereload());
 });
 
 // builds js
 gulp.task('js', ['reset'], function(cb) {
 	return gulp.src([paths.source + sources.js])
-		.pipe(gulp.dest(paths.build + destinations.js));
+		.pipe(gulp.dest(paths.build + destinations.js))
+		.pipe($.livereload());
 });
 
 // builds src to the build directory
@@ -63,6 +65,7 @@ gulp.task('dist', ['build'], function() {
 
 // watch
 gulp.task('watch', function() {
+	$.livereload.listen();
 	gulp.watch(paths.source + sources.sass, ['build']);
 	gulp.watch(paths.source + sources.js, ['build']);
 	gulp.watch(paths.source + sources.php, ['build']);
