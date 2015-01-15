@@ -50,7 +50,8 @@ class Easy_QA_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/easy-qa.css', $this->version, 'all' );
+		wp_enqueue_style( 'font-awesome', sprintf( '%s://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', is_ssl() ? 'http' : 'http' ), null, $this->version );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/easy-qa.css', array('font-awesome'), $this->version, 'all' );
 	}
 
 	/**
@@ -93,7 +94,7 @@ class Easy_QA_Public {
 	}
 
 	public function add_filters() {
-		add_filter( 'template_include', array( &$this, 'load_template' ) );
+		add_filter( 'template_include', array( &$this, 'load_custom_template' ) );
 		add_filter( 'pre_get_posts', array( &$this, 'search_filter' ) );
 	}
 
@@ -133,20 +134,15 @@ class Easy_QA_Public {
 		return $query;
 	}
 
-	public function load_template( $template ) {
-		// Post ID
-		$post_id = get_the_ID();
+	public function load_custom_template( $template ) {
 
-		if ( get_post_type( $post_id ) != 'easy_qa_question' && !is_archive() ) {
-			return $template;
-		}
-
-		if ( is_single() ) {
+		if ( is_single() && get_post_type( get_the_ID() ) == 'easy_qa_question' ) {
 			return get_easy_qa_template_path( 'single' );
-		} elseif ( is_archive() ) {
+		} elseif ( ( is_archive() || is_search() ) && (get_query_var( 'post_type' ) == 'easy_qa_question' ) ) {
 			return get_easy_qa_template_path( 'archive-qa-question' );
 		}
 
+		return $template;
 	}
 
 	public function easy_qa_callback( $atts ) {

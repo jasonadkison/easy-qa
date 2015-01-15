@@ -17,7 +17,7 @@ $average = is_array( $ratings ) ? ( round( array_sum( $ratings ) / count( $ratin
 
 <!-- Begin Easy QA Ratings -->
 
-<div class="row">
+<div class="easy-qa-ratings row">
 
 	<div class="col-sm-6">
 		<h3><?php _e( 'Average Rating', 'easy-qa' ); ?></h3>

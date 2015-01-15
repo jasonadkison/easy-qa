@@ -48,7 +48,8 @@
 			},
 			step: 1.0,
 			showClear: false,
-			size: 'xs'
+			size: 'xs',
+			symbol: '★'
 		};
 
 		var $ratings = $('.easy-qa-ratings input.rating-stars');
