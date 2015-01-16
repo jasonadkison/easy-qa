@@ -1,36 +1,36 @@
 #easy-qa-form {
-	margin: 1em 10% 2em 10%;
-	float: none;
-}
+  margin: 1em 10% 2em 10%;
+  float: none;
 
-#easy-qa-form.loading {
-	pointer-events: none;
-	opacity: 0.5;
-}
+  .loading {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
-#easy-qa-form .has-error {
-	color: red;
-}
+  .has-error {
+    color: red;
 
-#easy-qa-form .has-error input {
-	border-color: red;
-	color: red;
-	background: lightpink;
-}
+    input {
+      border-color: red;
+      color: red;
+      background: lightpink;
+    }
+  }
 
-#easy-qa-form .error-text {
-	color: red;
-	font-style: italic;
-}
+  .error-text {
+    color: red;
+    font-style: italic;
+  }
 
-#easy-qa-form .recaptcha iframe.has-error {
-	border: 1px solid red;
-}
+  .recaptcha iframe.has-error {
+    border: 1px solid red;
+  }
 
-#easy-qa-form form {
-	display: none;
-}
+  form {
+    display: none;
 
-#easy-qa-form form.active {
-	display: block;
+    &.active {
+      display: block;
+    }
+  }
 }

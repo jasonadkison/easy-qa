@@ -49,7 +49,7 @@
 			step: 1.0,
 			showClear: false,
 			size: 'xs',
-			symbol: '★'
+			glyphicon: false
 		};
 
 		var $ratings = $('.easy-qa-ratings input.rating-stars');

@@ -1,5 +1,7 @@
 var gulp = require('gulp');
 var del = require('del');
+var es = require('event-stream');
+var runSequence = require('run-sequence');
 var $ = require('gulp-load-plugins')();
 
 var paths = {
@@ -11,6 +13,7 @@ var paths = {
 var sources = {
 	all: '/**/*',
 	sass: '/public/scss/**/*.scss',
+	css: '/public/css/**/*.css',
 	js: '/public/js/**/*.js',
 	php: '/**/*.php'
 };
@@ -20,6 +23,36 @@ var destinations = {
 	js: '/public/js',
 	php: '/'
 };
+
+/* ===== Begin Main Tasks ===== */
+
+// compiles new build from source
+gulp.task('build', ['reset', 'sass', 'js']);
+
+// creates new dist by copying and compiles the build
+gulp.task('dist', ['build'], function() {
+	runSequence(
+		'dist-create',
+		'dist-css'
+	);
+});
+
+// watches source
+gulp.task('watch', function() {
+	$.livereload.listen();
+	gulp.watch(paths.source + sources.sass, ['build']);
+	gulp.watch(paths.source + sources.js, ['build']);
+	gulp.watch(paths.source + sources.php, ['build']);
+});
+
+// default task
+gulp.task('default', ['watch'], function() {
+
+});
+
+/* ===== End Main Tasks ===== */
+
+/* ===== Begin Sub Tasks ===== */
 
 // empty build/dist directories
 gulp.task('erase', function(cb) {
@@ -42,7 +75,11 @@ gulp.task('php', ['reset'], function() {
 // builds sass to the build directory
 gulp.task('sass', ['reset'], function() {
 	return gulp.src([paths.source + sources.sass])
-		.pipe($.sass())
+		.pipe($.sass({outputStyle: 'nested', sourceComments: true}))
+		.pipe($.autoprefixer({
+			browsers: ['> 1%'],
+			cascade: false
+		}))
 		.pipe(gulp.dest(paths.build + destinations.css))
 		.pipe($.livereload());
 });
@@ -54,24 +91,16 @@ gulp.task('js', ['reset'], function(cb) {
 		.pipe($.livereload());
 });
 
-// builds src to the build directory
-gulp.task('build', ['reset', 'sass', 'js']);
-
-// copies the current build to the dist directory
-gulp.task('dist', ['build'], function() {
-	return gulp.src(paths.build + sources.all)
-		.pipe(gulp.dest(paths.dist));
+// copies the build as a new dist
+gulp.task('dist-create', function() {
+	return gulp.src(paths.build + sources.all).pipe(gulp.dest(paths.dist));
 });
 
-// watch
-gulp.task('watch', function() {
-	$.livereload.listen();
-	gulp.watch(paths.source + sources.sass, ['build']);
-	gulp.watch(paths.source + sources.js, ['build']);
-	gulp.watch(paths.source + sources.php, ['build']);
+// builds the dist css
+gulp.task('dist-css', function() {
+	return gulp.src(paths.dist + sources.css)
+		.pipe($.minifyCss({keepSpecialComments: false}))
+		.pipe(gulp.dest(paths.dist + destinations.css));
 });
 
-// default
-gulp.task('default', ['watch'], function() {
-	
-});
+/* ===== End Sub Tasks ===== */
