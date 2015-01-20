@@ -1,0 +1,20 @@
+{
+  "name": "easy-qa",
+  "version": "0.1.0",
+  "homepage": "http://emptyset.co/wordpress/easy-qa",
+  "authors": [
+    "Jason Adkison <jadkison@gmail.com>"
+  ],
+  "description": "A Wordpress plugin to easily add a Q&A section to your site.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "gridism": "~0.2.1"
+  }
+}

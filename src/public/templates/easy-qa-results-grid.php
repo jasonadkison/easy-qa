@@ -51,7 +51,7 @@ query_posts( $args );
 <?php if ( have_posts() ) : ?>
 
 	<?php if ( ( is_archive() || $keyword ) && $title ): ?>
-		<header id="easy-qa-header" class="entry-header">
+		<header id="easy-qa easy-qa-header" class="entry-header">
 
 			<?php if ($title) : ?>
 				<h1 class="entry-title">
@@ -83,66 +83,70 @@ query_posts( $args );
 		</header>
 	<?php endif; ?>
 
-	<section id="easy-qa-grid">
+	<section class="easy-qa easy-qa-grid">
 
-		<?php while ( have_posts() ) : the_post(); ?>
+		<div class="grid">
 
-			<div class="item col-xs-12 col-sm-4">
+			<?php while ( have_posts() ) : the_post(); ?>
 
-				<div class="cell">
+				<div class="item unit one-third">
 
-					<a class="see-answer-sm" href="<?php the_permalink(); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
-						<span>See Answer</span>
-					</a>
+					<div class="cell">
 
-					<div class="post-block blue">
+						<a class="see-answer-sm" href="<?php the_permalink(); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
+							<span>See Answer</span>
+						</a>
 
-						<div class="post-body">
-							<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( get_the_title() ); ?>"><?php the_title(); ?></a>
-						</div>
+						<div class="post-block blue">
 
-						<div class="author-body">
-							<div class="quote-caret"></div>
+							<div class="post-body">
+								<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( get_the_title() ); ?>"><?php the_title(); ?></a>
+							</div>
 
-							<div class="author-info">
+							<div class="author-body">
+								<div class="quote-caret"></div>
 
-								<?php
-								$name = get_easy_qa_question_field( get_the_ID(), 'name' );
-								$location = get_easy_qa_question_field( get_the_ID(), array( 'city', 'state' ), ', ' );
-								if ( $name || $location ) :
-								?>
+								<div class="author-info">
 
-									<?php if ( $name ) : ?>
-										<div class="col-xs-12">
-											<span class="author-name">
-												<span class="glyphicon glyphicon-user"></span>
-												<?php echo $name ?></span>
-											</span>
-										</div>
+									<?php
+									$name = get_easy_qa_question_field( get_the_ID(), 'name' );
+									$location = get_easy_qa_question_field( get_the_ID(), array( 'city', 'state' ), ', ' );
+									if ( $name || $location ) :
+									?>
+
+										<?php if ( $name ) : ?>
+											<div class="col-xs-12">
+												<span class="author-name">
+													<span class="glyphicon glyphicon-user"></span>
+													<?php echo $name ?></span>
+												</span>
+											</div>
+										<?php endif; ?>
+
+										<?php if ( $location ) : ?>
+											<div class="col-xs-12">
+												<span class="author-location">
+													<span class="glyphicon glyphicon-map-marker"></span>
+													<?php echo $location; ?>
+												</span>
+											</div>
+										<?php endif; ?>
+
 									<?php endif; ?>
 
-									<?php if ( $location ) : ?>
-										<div class="col-xs-12">
-											<span class="author-location">
-												<span class="glyphicon glyphicon-map-marker"></span>
-												<?php echo $location; ?>
-											</span>
-										</div>
-									<?php endif; ?>
+								</div><!--/.author-info-->
 
-								<?php endif; ?>
+							</div><!--/.author-body-->
 
-							</div><!--/.author-info-->
+						</div><!--/.post-block-->
 
-						</div><!--/.author-body-->
+					</div><!--/.cell-->
 
-					</div><!--/.post-block-->
+				</div><!--/.item-->
 
-				</div><!--/.cell-->
+			<?php endwhile; ?>
 
-			</div><!--/.item-->
-
-		<?php endwhile; ?>
+		</div>
 
 	</section>
 

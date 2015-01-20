@@ -1,5 +1,5 @@
-#easy-qa-form {
-  margin: 1em 10% 2em 10%;
+.easy-qa-form {
+  margin: 1em 0;
   float: none;
 
   .loading {
@@ -32,5 +32,10 @@
     &.active {
       display: block;
     }
+
+  }
+
+  .form-group {
+    margin: 0 0 0.5em 0;
   }
 }

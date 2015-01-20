@@ -15,7 +15,7 @@ $tax_terms = get_terms( $taxonomy, array( 'hide_empty' => false ) );
 
 <!-- Begin Easy QA Topics List -->
 
-<div class="easy-qa-topics">
+<div class="easy-qa easy-qa-topics">
 
 	<ul>
 		<?php foreach ($tax_terms as $tax_term) : ?>

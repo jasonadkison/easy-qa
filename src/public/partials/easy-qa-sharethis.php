@@ -14,7 +14,7 @@ $providers_code = is_array( $options ) && isset( $options['sharethis_providers_c
 
 <!-- Begin Easy QA Sharethis -->
 
-<div class="easy-qa-sharethis">
+<div class="easy-qa easy-qa-sharethis">
 	<h3>Share this Question</h3>
 	<?php if ( $providers_code ) : ?>
 		<?php echo $providers_code; ?>

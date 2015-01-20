@@ -51,7 +51,8 @@ class Easy_QA_Public {
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( 'font-awesome', sprintf( '%s://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', is_ssl() ? 'http' : 'http' ), null, $this->version );
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/easy-qa.css', array('font-awesome'), $this->version, 'all' );
+		wp_enqueue_style( 'easy-qa-gridism', plugin_dir_url( __FILE__ ) . 'css/gridism.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/easy-qa.css', array( 'font-awesome', 'easy-qa-gridism' ), $this->version, 'all' );
 	}
 
 	/**

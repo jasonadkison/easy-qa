@@ -1,8 +1,12 @@
 var gulp = require('gulp');
 var del = require('del');
 var es = require('event-stream');
+var merge = require('merge-stream');
 var runSequence = require('run-sequence');
-var $ = require('gulp-load-plugins')();
+var $ = require('gulp-load-plugins')({
+	pattern: ['gulp-*', 'gulp.*', 'main-bower-files'],
+	replaceString: /\bgulp[\-.]/
+});
 
 var paths = {
 	build: './build',
@@ -27,7 +31,7 @@ var destinations = {
 /* ===== Begin Main Tasks ===== */
 
 // compiles new build from source
-gulp.task('build', ['reset', 'sass', 'js']);
+gulp.task('build', ['reset', 'css', 'js']);
 
 // creates new dist by copying and compiles the build
 gulp.task('dist', ['build'], function() {
@@ -72,9 +76,13 @@ gulp.task('php', ['reset'], function() {
 		.pipe($.livereload());
 });
 
-// builds sass to the build directory
-gulp.task('sass', ['reset'], function() {
-	return gulp.src([paths.source + sources.sass])
+// builds stylesheets to the build directory
+gulp.task('css', ['reset'], function() {
+	var bowerCss = gulp.src($.mainBowerFiles())
+		.pipe($.scopeCss('.easy-qa'))
+		.pipe(gulp.dest(paths.build + destinations.css));
+
+	var scss = gulp.src([paths.source + sources.sass])
 		.pipe($.sass({outputStyle: 'nested', sourceComments: true}))
 		.pipe($.autoprefixer({
 			browsers: ['> 1%'],
@@ -82,6 +90,8 @@ gulp.task('sass', ['reset'], function() {
 		}))
 		.pipe(gulp.dest(paths.build + destinations.css))
 		.pipe($.livereload());
+
+	return merge(bowerCss, scss);
 });
 
 // builds js

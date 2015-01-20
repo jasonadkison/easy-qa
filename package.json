@@ -3,23 +3,25 @@
   "version": "1.0.0",
   "description": "A Wordpress plugin to easily add a Q&A section to your site.",
   "main": "gulpfile.js",
-  "dependencies": {
-    "gulp": "^3.8.10"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "bower": "^1.3.12",
     "del": "^1.1.1",
+    "event-stream": "^3.2.1",
     "gulp": "^3.8.10",
+    "gulp-autoprefixer": "^2.1.0",
     "gulp-concat": "^2.4.3",
     "gulp-livereload": "^3.3.0",
     "gulp-load-plugins": "^0.8.0",
+    "gulp-minify-css": "^0.3.12",
     "gulp-sass": "^1.2.4",
     "gulp-uglify": "^1.0.2",
     "gulp-watch": "^3.0.0",
+    "main-bower-files": "^2.5.0",
     "node-sass": "^1.2.3",
-    "gulp-autoprefixer": "^2.1.0",
-    "gulp-minify-css": "^0.3.12",
-    "event-stream": "^3.2.1",
-    "run-sequence": "^1.0.2"
+    "run-sequence": "^1.0.2",
+    "gulp-scope-css": "0.0.2",
+    "merge-stream": "^0.1.7"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
