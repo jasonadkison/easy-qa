@@ -1,5 +1,5 @@
 # Easy Q&A
- * Website: [http://emptyset.co/wordpress/easy-qa](http://emptyset.co/wordpress/easy-qa)
+ * Demo: [http://wpdev.jasonadkison.com/](http://wpdev.jasonadkison.com/)
 
 Easily create a responsive Q&A section for your Wordpress site. Key features include a built-in rating system, email notifications, social media sharing, search, topic categories, and the ability for visitors to ask questions.
 
@@ -12,7 +12,8 @@ npm, gulp, and a running Wordpress site.
 3. Install the plugin through the Wordpress dashboard.
 4. Change your current directory to the plugin directory. `$ cd /path/to/plugin`
 5. Install dependencies. `$ npm install`
-4. Watch for code changes from the root project path. `$ cd /path/to/plugin && gulp`
+6. Install Gulp and Bower globally. `$ sudo npm install gulp bower -g`
+7. Watch for code changes from the root project path. `$ cd /path/to/plugin && gulp`
 
 ####Development
 
