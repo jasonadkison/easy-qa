@@ -40,7 +40,7 @@ class Easy_QA_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		$this->options = get_option( 'advanced_qa_options' );
+		$this->options = get_option( 'easy_qa_options' );
 
 	}
 
