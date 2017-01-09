@@ -42,7 +42,7 @@ gulp.task('dist', ['build'], function() {
 });
 
 // watches source
-gulp.task('watch', function() {
+gulp.task('watch', ['build'], function() {
 	$.livereload.listen();
 	gulp.watch(paths.source + sources.sass, ['build']);
 	gulp.watch(paths.source + sources.js, ['build']);

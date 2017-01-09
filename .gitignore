@@ -3,5 +3,5 @@ node_modules
 bower_components
 src/public/css/*
 src/admin/css/*
-build/*
-dist/*
+build
+dist
