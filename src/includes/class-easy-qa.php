@@ -168,8 +168,8 @@ class Easy_QA {
 
 		$public = new Easy_QA_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $public, 'enqueue_styles', 11 );
+		$this->loader->add_action( 'wp_enqueue_scripts', $public, 'enqueue_scripts', 11 );
 
 		$this->loader->add_action( 'init', $public, 'init_hooks' );
 

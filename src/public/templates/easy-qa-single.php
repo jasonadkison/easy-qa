@@ -13,77 +13,72 @@ get_header();
 ?>
 
 <div id="primary" class="content-area">
-	<main id="main" class="site-main" role="main">
+  <main id="main" class="site-main" role="main">
 
-		<?php while ( have_posts() ) : the_post(); ?>
-			<?php
-			$name = get_easy_qa_question_field( get_the_ID(), 'name' );
-			$location = get_easy_qa_question_field( get_the_ID(), array( 'city', 'state' ), ', ' );
-			?>
+    <?php while ( have_posts() ) : the_post(); ?>
+      <?php
+      $name = get_easy_qa_question_field( get_the_ID(), 'name' );
+      $location = get_easy_qa_question_field( get_the_ID(), array( 'city', 'state' ), ', ' );
+      ?>
 
-			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+      <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-				<?php the_post_thumbnail( 'sparkling-featured', array( 'class' => 'single-featured' )); ?>
+        <div class="post-inner-content">
 
-				<div class="post-inner-content">
+          <div class="entry-content">
 
-					<?php echo do_shortcode( '[easy_qa partials="search-form"]' ); ?>
+            <blockquote>
+              <?php the_title(); ?>
+            </blockquote>
 
-					<header class="entry-header page-header">
+            <?php if ( $name || $location ) : ?>
+              <span>
+                <!-- author name -->
+                <?php if ( $name ) : ?>
+                  <?php echo $name; ?>
+                <?php endif; ?>
 
-						<blockquote>
-							<p><?php the_title(); ?></p>
+                <!-- author location -->
+                <?php if ( $location ) : ?>
+                from <cite title="Location"><?php echo $location; ?></cite>
+                <?php endif; ?>
+              </span>
+            <?php endif; ?>
 
-							<?php if ( $name || $location ) : ?>
-								<footer>
-									<!-- author name -->
-									<?php if ( $name ) : ?>
-										<?php echo $name; ?>
-									<?php endif; ?>
+          </div>
 
-									<!-- author location -->
-									<?php if ( $location ) : ?>
-									from <cite title="Location"><?php echo $location; ?></cite>
-									<?php endif; ?>
-								</footer>
-							<?php endif; ?>
-						</blockquote>
+          <div class="entry-content">
+            <?php the_content(); ?>
 
-						<?php edit_post_link( __( 'Edit', 'easy-qa' ), '<i class="fa fa-pencil-square-o"></i><span class="edit-link">', '</span>' ); ?>
+            <?php edit_post_link( __( 'Edit', 'easy-qa' ), '<i class="fa fa-pencil-square-o"></i><span class="edit-link">', '</span>' ); ?>
+          </div>
 
-					</header>
+          <div class="entry-content">
+            <?php echo do_shortcode( '[easy_qa partials="ratings"]' ); ?>
+            <?php echo do_shortcode( '[easy_qa partials="sharethis"]'); ?>
+          </div>
 
-					<div class="entry-content">
-						<?php the_content(); ?>
-					</div>
-
-				</div><!-- /.post-inner-content -->
-
-
-				<div class="post-inner-content secondary-content-box">
-					<?php echo do_shortcode( '[easy_qa partials="sharethis"]'); ?>
-					<?php echo do_shortcode( '[easy_qa partials="ratings"]' ); ?>
-				</div><!-- /.secondary-content-box -->
-
-			</article>
+        </div>
 
 
-			<?php
-				// If comments are open or we have at least one comment, load up the comment template
-				if ( comments_open() || '0' != get_comments_number() ) :
-					comments_template();
-				endif;
-			?>
+        <?php
+          // If comments are open or we have at least one comment, load up the comment template
+          if ( comments_open() || '0' != get_comments_number() ) :
+            comments_template();
+          endif;
+        ?>
 
-			<?php
-			if ( function_exists( 'easy_qa_paging_nav' ) ) {
-				easy_qa_post_nav();
-			}
-			?>
+      </article>
 
-		<?php endwhile; // end of the loop. ?>
+      <?php
+      if ( function_exists( 'easy_qa_paging_nav' ) ) {
+        easy_qa_post_nav();
+      }
+      ?>
 
-	</main>
+    <?php endwhile; // end of the loop. ?>
+
+  </main>
 </div>
 
 <?php get_sidebar(); ?>

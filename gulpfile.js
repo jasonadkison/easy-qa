@@ -33,6 +33,8 @@ var bootstrapSass = {
   in: './node_modules/bootstrap-sass/'
 };
 
+var bootstrapJs = 'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js';
+
 var fonts = {
   in: [bootstrapSass.in + 'assets/fonts/**/*'],
   out: paths.build + destinations.fonts
@@ -106,6 +108,7 @@ gulp.task('css', function() {
 // builds js
 gulp.task('js', function() {
   return gulp.src([paths.source + sources.js])
+    .pipe($.appendPrepend.prependFile(bootstrapJs))
     .pipe(gulp.dest(paths.build + destinations.js))
     .pipe($.livereload());
 });

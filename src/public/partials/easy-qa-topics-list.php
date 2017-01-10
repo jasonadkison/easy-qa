@@ -15,17 +15,18 @@ $tax_terms = get_terms( $taxonomy, array( 'hide_empty' => false ) );
 
 <!-- Begin Easy QA Topics List -->
 
-<div class="easy-qa easy-qa-topics">
+<div class="easy-qa-topics">
 
-	<ul>
-		<?php foreach ($tax_terms as $tax_term) : ?>
-			<li>
-				<a href="<?php echo esc_attr( get_term_link( $tax_term, $taxonomy ) ) ?>" title="<?php printf( 'View all %s Questions', $tax_term->name ); ?>">
-					<?php echo $tax_term->name; ?>
-				</a>
-			</li>
-		<?php endforeach; ?>
-	</ul>
+  <ul class="list-group">
+    <?php foreach ($tax_terms as $tax_term) : ?>
+      <li class="list-group-item">
+        <span class="badge"><?php echo $tax_term->count; ?></span>
+        <a href="<?php echo esc_attr( get_term_link( $tax_term, $taxonomy ) ) ?>" title="<?php printf( 'View all %s Questions', $tax_term->name ); ?>">
+          <?php echo $tax_term->name; ?>
+        </a>
+      </li>
+    <?php endforeach; ?>
+  </ul>
 
 </div>
 

@@ -3,6 +3,31 @@
 @import "bootstrap-custom";
 @import "bootstrap/theme";
 
+a {
+  border: 0;
+}
+
+.easy-qa-tabs {
+  @extend .nav;
+  @extend .nav-tabs;
+}
+
+.easy-qa-tab-content {
+  @extend .tab-content;
+}
+
+.easy-qa-form {
+  form {
+    @extend .tab-pane;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    &.active {
+      @extend .active;
+    }
+  }
+}
+
 .easy-qa-sharethis {
 	margin: 1em 0;
 }
@@ -152,47 +177,5 @@
 
   .star-rating-rtl .caption {
     padding-right: 5px;
-  }
-}
-
-.easy-qa-form {
-  margin: 1em 0;
-  float: none;
-
-  .loading {
-    pointer-events: none;
-    opacity: 0.5;
-  }
-
-  .has-error {
-    color: red;
-
-    input {
-      border-color: red;
-      color: red;
-      background: lightpink;
-    }
-  }
-
-  .error-text {
-    color: red;
-    font-style: italic;
-  }
-
-  .recaptcha iframe.has-error {
-    border: 1px solid red;
-  }
-
-  form {
-    display: none;
-
-    &.active {
-      display: block;
-    }
-
-  }
-
-  .form-group {
-    margin: 0 0 0.5em 0;
   }
 }
