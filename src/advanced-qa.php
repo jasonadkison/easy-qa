@@ -26,7 +26,7 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	die;
+  die;
 }
 
 // Load helper functions
@@ -36,16 +36,16 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/easy-qa-helpers.php';
  * The code that runs during plugin activation.
  */
 function activate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-easy-qa-activator.php';
-	Easy_QA_Activator::activate();
+  require_once plugin_dir_path( __FILE__ ) . 'includes/class-easy-qa-activator.php';
+  Easy_QA_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  */
 function deactivate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-easy-qa-deactivator.php';
-	Easy_QA_Deactivator::deactivate();
+  require_once plugin_dir_path( __FILE__ ) . 'includes/class-easy-qa-deactivator.php';
+  Easy_QA_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_plugin_name' );
@@ -67,8 +67,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-easy-qa.php';
  */
 function run_plugin_name() {
 
-	$plugin = new Easy_QA();
-	$plugin->run();
+  $plugin = new Easy_QA();
+  $plugin->run();
 
 }
 run_plugin_name();

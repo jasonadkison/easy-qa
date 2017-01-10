@@ -93,8 +93,10 @@ class Easy_QA_Public {
   }
 
   public function add_filters() {
-    add_filter( 'template_include', array( &$this, 'load_custom_template' ) );
+    //add_filter( 'template_include', array( &$this, 'load_custom_template' ) );
     add_filter( 'pre_get_posts', array( &$this, 'search_filter' ) );
+    add_filter( 'the_content', array( &$this, 'modify_the_content' ) );
+    add_filter( 'the_excerpt', array( &$this, 'modify_the_excerpt' ) );
   }
 
   public function add_shortcodes() {
@@ -133,15 +135,35 @@ class Easy_QA_Public {
     return $query;
   }
 
-  public function load_custom_template( $template ) {
+//  public function load_custom_template( $template ) {
+//
+//    if ( is_single() && get_post_type( get_the_ID() ) == 'easy_qa_question' ) {
+//      return get_easy_qa_template_path( 'single' );
+//    } elseif ( ( is_archive() || is_search() ) && (get_query_var( 'post_type' ) == 'easy_qa_question' ) ) {
+//      return get_easy_qa_template_path( 'archive-qa-question' );
+//    }
+//
+//    return $template;
+//  }
 
-    if ( is_single() && get_post_type( get_the_ID() ) == 'easy_qa_question' ) {
-      return get_easy_qa_template_path( 'single' );
-    } elseif ( ( is_archive() || is_search() ) && (get_query_var( 'post_type' ) == 'easy_qa_question' ) ) {
-      return get_easy_qa_template_path( 'archive-qa-question' );
+  public function modify_the_content( $content ) {
+    if ( is_single() && get_post_type() == 'easy_qa_question' ) {
+      return $content . do_shortcode('[easy_qa partials="ratings|sharethis"]');
     }
 
-    return $template;
+    if (is_tax('easy_qa_topic')) {
+      return '<a href="' . get_the_permalink() . '" title="' . the_title_attribute( array( 'echo' => false ) ) . '">View Answer</a>';
+    }
+
+    return $content;
+  }
+
+  public function modify_the_excerpt( $excerpt ) {
+    var_dump(is_tax('qa_topic'));
+    die();
+    if ( !is_archive() || get_post_type() != 'easy_qa_question' ) return $excerpt;
+
+    return '<a href="' . get_the_permalink() . '" title="' . the_title_attribute( array( 'echo' => false ) ) . '">View Answer</a>';
   }
 
   public function easy_qa_callback( $atts ) {
