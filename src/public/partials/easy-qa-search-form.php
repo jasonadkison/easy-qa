@@ -12,7 +12,7 @@
 
 <!-- Begin Easy QA Search Form -->
 
-<div class="easy-qa easy-qa-form grid">
+<div class="easy-qa easy-qa-form">
 
 	<div class="easy-qa-nav btn-group unit whole" role="group">
 		<button type="button" class="btn btn-default active" data-toggle-form="search">Search</button>

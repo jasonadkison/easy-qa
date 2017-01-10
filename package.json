@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "A Wordpress plugin to easily add a Q&A section to your site.",
   "main": "gulpfile.js",
-  "dependencies": {},
+  "dependencies": {
+    "bootstrap-sass": "^3.3.7"
+  },
   "devDependencies": {
-    "bower": "^1.3.12",
     "del": "^1.1.1",
     "event-stream": "^3.2.1",
     "gulp": "^3.8.10",
