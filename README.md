@@ -1,7 +1,9 @@
 # Easy Q&A
  * Demo: [http://wpdev.jasonadkison.com/](http://wpdev.jasonadkison.com/)
 
-Easily create a responsive Q&A section for your Wordpress site. Key features include a built-in rating system, email notifications, social media sharing, search, topic categories, and the ability for visitors to ask questions.
+Creates a simple Questions and Answers feature for your Wordpress site. Users can submit new
+questions and receive email notification when answered. Questions are organized into topics and the
+plugin includes different shortcodes to render the elements anywhere.
 
 ## Shortcodes
 Paste these shortcodes into any page.
