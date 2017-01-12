@@ -97,6 +97,7 @@ class Easy_QA_Public {
     add_filter( 'pre_get_posts', array( &$this, 'search_filter' ) );
     add_filter( 'the_content', array( &$this, 'modify_the_content' ) );
     add_filter( 'the_excerpt', array( &$this, 'modify_the_excerpt' ) );
+    add_filter( 'query_vars', array( &$this, 'expose_query_vars' ) );
   }
 
   public function add_shortcodes() {
@@ -147,23 +148,32 @@ class Easy_QA_Public {
 //  }
 
   public function modify_the_content( $content ) {
+    // if single question post
     if ( is_single() && get_post_type() == 'easy_qa_question' ) {
-      return $content . do_shortcode('[easy_qa partials="ratings|sharethis"]');
+      return '[easy_qa partials="author"]' . $content;
     }
 
+    // if qa topic archive
     if (is_tax('easy_qa_topic')) {
-      return '<a href="' . get_the_permalink() . '" title="' . the_title_attribute( array( 'echo' => false ) ) . '">View Answer</a>';
+      return do_shortcode('[easy_qa partials="view-answer-link"]');
     }
 
     return $content;
   }
 
   public function modify_the_excerpt( $excerpt ) {
-    var_dump(is_tax('qa_topic'));
-    die();
-    if ( !is_archive() || get_post_type() != 'easy_qa_question' ) return $excerpt;
+    if ( !is_singular() && get_post_type() == 'easy_qa_question' ) {
+      return do_shortcode('[easy_qa partials="view-answer-link"]');
+    }
 
-    return '<a href="' . get_the_permalink() . '" title="' . the_title_attribute( array( 'echo' => false ) ) . '">View Answer</a>';
+    return $excerpt;
+  }
+
+  public function expose_query_vars( $vars ) {
+    $vars[] = "qa_keyword";
+    $vars[] = "qa_topic";
+    $vars[] = "qa_page";
+    return $vars;
   }
 
   public function easy_qa_callback( $atts ) {
@@ -177,23 +187,24 @@ class Easy_QA_Public {
   }
 
   private function render($atts) {
-    $content = '<div class="easy-qa-plugin">';
+    $content = '';
 
     if ( is_array( $atts ) && isset( $atts['partials'] ) && is_array( $atts['partials'] ) ) {
 
       $partials = $atts['partials'];
 
       if ( count($partials) > 0 ) {
+
         foreach( $partials as $partial ) {
+          $content .= '<div class="easy-qa-plugin easy-qa-plugin-' . $partial . '">';
           $content .= easy_qa_include_file( get_easy_qa_partial_path( $partial ) );
+          $content .= "</div>";
         }
 
         return $content;
       }
 
     }
-
-    $content .= "</div>";
 
     return $content;
   }

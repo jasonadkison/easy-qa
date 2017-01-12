@@ -9,136 +9,67 @@
  * @author jason@emptyset.co
  */
 
- global $wp_query;
+$terms = get_terms( 'easy_qa_topic', array( 'hide_empty' => false ) );
+?>
 
- $term = $wp_query->query_vars['term'];
- $keyword = get_query_var( 's' );
- $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+<section class="easy-qa-results">
 
- $args = array(
-   'post_type' => 'easy_qa_question',
-   'post_status' => array( 'publish' ),
-   'posts_per_page' => get_site_option( 'posts_per_page' ),
-   'paged' => $paged
- );
+  <div class="panel-group" id="topics-accordion" role="tablist" aria-multiselectable="true">
+    <?php foreach ($terms as $idx => $term ): ?>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="heading<?php echo $idx; ?>" data-toggle="collapse" data-parent="#topics-accordion" href="#qa-topic-<?php echo $term->slug ?>" aria-expanded="true" aria-controls="qa-topic-<?php echo $term->slug ?>">
+          <h4 class="panel-title">
+            <?php echo $term->name; ?>
+            <span class="badge pull-right"><?php echo $term->count; ?></span>
+          </h4>
+        </div>
+        <div id="qa-topic-<?php echo $term->slug ?>" class="panel-collapse collapse <?php echo $idx == 0 ? 'in' : ''; ?>" role="tabpanel" aria-labelledby="heading<?php echo $idx; ?>">
+          <div class="list-group">
+            <?php
+            $query = new WP_Query( array(
+              'post_type' => 'easy_qa_question',
+              'post_status' => array( 'publish' ),
+              'posts_per_page' => -1,
+              'orderby' => 'menu_order',
+              'order' => 'ASC',
+              'tax_query' => array(
+                array(
+                  'taxonomy' => 'easy_qa_topic',
+                  'field' => 'slug',
+                  'terms' => $term->slug,
+                )
+              )
+            ) );
+            ?>
+            <?php if ( $query->have_posts() ): ?>
+              <?php while ( $query->have_posts() ) : $query->the_post(); ?>
+                <a class="list-group-item" href="<?php the_permalink(); ?>" title="<?php echo esc_attr(get_the_title()); ?>">
+                  <?php the_title(); ?>
+                </a>
+              <?php endwhile; ?>
+            <?php else: ?>
+              <span class="list-group-item">No questions within this topic yet.</span>
+            <?php endif; ?>
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
 
- if ( $term ) {
-   $args['tax_query'] = array(
-     array(
-       'taxonomy' => 'easy_qa_topic',
-       'field' => 'slug',
-       'terms' => $term,
-     )
-   );
- }
+  <?php if ($query->have_posts()) : ?>
+    <?php while ($query->have_posts()) : $query->the_post(); ?>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <a href="<?php the_permalink(); ?>" title="<?php echo esc_attr(get_the_title()); ?>">
+            <?php the_title(); ?>
+          </a>
+        </div>
+        <div class="panel-footer">
+          <?php echo do_shortcode('[easy_qa partials="author"]'); ?>
+        </div>
+      </div>
+      <?php wp_reset_postdata(); ?>
+    <?php endwhile; ?>
+  <?php endif; ?>
 
- if ( strlen( $keyword ) ) {
-   $args['s'] = $keyword;
- }
-
- if ( $keyword ) {
-   $title = sprintf( '%s %s',
-     translate( 'Search Results', 'easy-qa' ),
-     $paged > 1 ? 'Page ' . $paged : ''
-   );
- } else {
-   $title = single_cat_title( '', false );
- }
-
- query_posts( $args );
- ?>
-
- <?php if ( have_posts() ) : ?>
-
-   <?php if ( ( is_archive() || $keyword ) && $title ): ?>
-     <header id="easy-qa easy-qa-header" class="entry-header">
-
-       <?php if ($title) : ?>
-         <h1 class="entry-title">
-           <?php echo $title; ?>
-         </h1>
-       <?php endif; ?>
-
-       <?php if ( $term || $keyword ) : ?>
-         <p class="col-xs-12">
-           <strong>
-             <?php if ( $keyword ) : ?>
-               <?php printf('%d %s contain the phrase "<em>%s</em>".',
-                 $wp_query->found_posts,
-                 ( $wp_query->found_posts == 1 ? translate( 'Question', 'easy-qa' ) : translate( 'Questions', 'easy-qa' ) ),
-                 $keyword
-               ); ?>
-             <?php endif; ?>
-             <?php if ( $term ) : ?>
-               <?php printf('%d %s found under "<em>%s</em>".',
-                 $wp_query->found_posts,
-                 ( $wp_query->found_posts == 1 ? translate( 'Question', 'easy-qa' ) : translate( 'Questions', 'easy-qa' ) ),
-                 single_cat_title( '', false )
-               ); ?>
-             <?php endif; ?>
-           </strong>
-         </p>
-       <?php endif; ?>
-
-     </header>
-   <?php endif; ?>
-
-   <section class="easy-qa-results">
-
-     <?php while ( have_posts() ) : ?>
-       <?php
-         the_post();
-         $name = get_easy_qa_question_field( get_the_ID(), 'name' );
-         $location = get_easy_qa_question_field( get_the_ID(), array( 'city', 'state' ), ', ' );
-       ?>
-
-       <div class="panel panel-default">
-
-         <div class="panel-heading">
-           <a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( get_the_title() ); ?>">
-             <?php the_title(); ?>
-           </a>
-         </div>
-
-         <div class="panel-footer">
-           <span class="author-name">
-             <span class="glyphicon glyphicon-user"></span>
-             <?php echo $name ? $name : "Anonymous"; ?>
-           </span>
-           <span class="author-location">
-             <span class="glyphicon glyphicon-map-marker"></span>
-             <?php echo $location ? $location : "Unknown Location"; ?>
-           </span>
-         </div>
-
-       </div>
-
-     <?php endwhile; ?>
-
-   </section>
-
-   <div class="row">
-     <div class="col-xs-12">
-       <?php echo easy_qa_paginate_links(); ?>
-     </div>
-   </div>
-
- <?php else : ?>
-
-   <section class="no-results not-found">
-     <div class="page-content">
-       <?php if ( is_search() ): ?>
-         <p>
-           Sorry, but nothing matched your search terms. Please try again with some different
-           keywords.
-         </p>
-       <?php else : ?>
-         <p>There were no questions found.</p>
-       <?php endif; ?>
-     </div>
-   </section>
-
- <?php endif; ?>
-
-
- <?php wp_reset_query(); ?>
+</section>

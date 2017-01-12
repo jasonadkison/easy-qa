@@ -34,7 +34,7 @@
     <form action="<?php bloginfo('siteurl'); ?>" method="get" role="tab-panel" class="active" id="easy-qa-search">
       <input type="hidden" name="post_type" value="easy_qa_question" />
       <div class="input-group">
-        <input type="text" class="form-control" name="s" placeholder="Search questions..." maxlength="140" value="<?php echo get_search_query(); ?>" required />
+        <input type="text" class="form-control" name="s" placeholder="Search questions..." maxlength="140" value="<?php echo get_query_var('s'); ?>" required />
         <span class="input-group-btn">
           <button type="submit" class="btn btn-default">
             Submit
