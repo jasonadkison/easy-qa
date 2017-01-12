@@ -2,9 +2,9 @@
 /**
  * Easy Q&A
  *
- * Easily create a responsive Q&A section for your Wordpress site. Key features
- * include a built-in rating system, email notifications, social media sharing,
- * search, topic categories, and the ability for visitors to ask questions.
+ * Creates a simple Questions and Answers feature for your Wordpress site. Users can submit new
+ * questions and receive email notification when answered. Questions are organized into topics and
+ * the plugin includes different shortcodes to render the elements anywhere.
  *
  * @link http://emptyset.co/wordpress/easy-qa
  * @since 1.0.0
@@ -14,9 +14,9 @@
  * @wordpress-plugin
  * Plugin Name: Easy Q&A
  * Plugin URI: http://emptyset.co/wordpress/easy-qa
- * Description: Easily create a responsive Q&A section for your Wordpress site. Key features include a built-in rating system, email notifications, social media sharing, search, topic categories, and the ability for visitors to ask questions.
+ * Description: Creates a simple Questions and Answers feature for your Wordpress site. Users can submit new questions and receive email notification when answered. Questions are organized into topics and the plugin includes different shortcodes to render the elements anywhere.
  * Version: 1.0.0
- * Author: Jason Adkison
+ * Author: EmptySet
  * Author URI: http://emptyset.co/
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
